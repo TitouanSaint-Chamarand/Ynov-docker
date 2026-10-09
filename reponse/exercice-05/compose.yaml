@@ -1,0 +1,34 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: ex05-mysql
+    restart: unless-stopped
+    networks:
+      - ex05-net
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: ynov_db
+      MYSQL_USER: ynov_user
+      MYSQL_PASSWORD: ynov_pass
+    volumes:
+      - ex05-mysql-data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+  adminer:
+    image: adminer:4
+    container_name: ex05-adminer
+    restart: unless-stopped
+    networks:
+      - ex05-net
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+networks:
+  ex05-net:
+    name: ex05-net
+
+volumes:
+  ex05-mysql-data:
+    name: ex05-mysql-data
