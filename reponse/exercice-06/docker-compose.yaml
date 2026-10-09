@@ -1,0 +1,8 @@
+services:
+  nginx-dev:
+    image: nginx:1.27-alpine
+    container_name: ex06-nginx-dev
+    ports:
+      - "8080:80"
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
